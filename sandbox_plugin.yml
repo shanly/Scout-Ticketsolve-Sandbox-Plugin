@@ -1,46 +1,13 @@
 options:
-  user:
-    name: MySQL username
-    notes: Specify the username to connect with
+  host:
+    name: Host
+    notes: The slave host to monitor
+    default: 127.0.0.1
+  username:
+    name: Username
+    notes: The MySQL username to use
     default: root
   password:
-    name: MySQL password
-    notes: Specify the password to connect with
-  host:
-    name: MySQL host
-    notes: Specify something other than 'localhost' to connect via TCP
-    default: localhost
-  port:
-    name: MySQL port
-    notes: Specify the port to connect to MySQL with (if nonstandard)
-  socket:
-    name: MySQL socket
-    notes: Specify the location of the MySQL socket
-    
-metadata:
-  select:
-    label: Select Queries
-    units: /sec
-  delete:
-    label: Delete Queries
-    units: /sec
-  update:
-    label: Update Queries
-    units: /sec
-  insert:
-    label: Insert Queries
-    units: /sec
-  replace:
-    label: Replace Queries
-    units: /sec
-  total:
-    label: Total Queries
-    units: /sec
-
-triggers:    
-  - type: trend
-    data_series_name: total
-    direction: UP                            
-    percentage_change: 30                    
-    duration: 60                           
-    window_reference: LAST_WEEK
+    name: Password
+    notes: The password for the mysql user
+    default:
