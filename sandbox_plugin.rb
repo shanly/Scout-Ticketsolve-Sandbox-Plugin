@@ -26,7 +26,11 @@ class MysqlReplicationMonitor < Scout::Plugin
     begin
       setup_mysql
 
+      error("111Replication not configured")
+
       h=connection.query("show slave status").fetch_hash
+
+      error("111Replication not configured")
 
       if h.nil?
         error("Replication not configured")
