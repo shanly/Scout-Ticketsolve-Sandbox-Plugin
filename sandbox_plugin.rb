@@ -26,31 +26,20 @@ class MysqlReplicationMonitor < Scout::Plugin
     begin
       setup_mysql
 
-      error("111Replication not configured")
-
       h=connection.query("show slave status").fetch_hash
-
-      error("222Replication not configured")
 
       if h.nil?
         error("Replication not configured")
       elsif h["Slave_IO_Running"] == "Yes" and h["Slave_SQL_Running"] == "Yes"
-        error("333Replication not configured")
-        if h["Seconds_Behind_Master"].to_i > 10
-          error("444Replication not configured")
-          alert("Replication not running",
+        if h["Seconds_Behind_Master"] != '0'
+          alert("Replication running slow!!!",
                 "IO Slave: #{h["Slave_IO_Running"]}\nSQL Slave: #{h["Slave_SQL_Running"]}\nSeconds Behind Master: #{h["Seconds_Behind_Master"]}")
-          error("555Replication not configured")
         else
-          error("666Replication not configured")
           report("Seconds Behind Master"=>h["Seconds_Behind_Master"])
-          error("777Replication not configured")
         end
       else
-        error("888Replication not configured")
         alert("Replication not running",
-              "IO Slave: #{h["Slave_IO_Running"]}\nSQL Slave: #{h["Slave_SQL_Running"]}")
-        error("999Replication not configured")
+              "IO Slave: #{h["Slave_IO_Running"]}\nSQL Slave: #{h["Slave_SQL_Running"]}\nSeconds Behind Master: #{h["Seconds_Behind_Master"]}")
       end
 
     rescue MissingLibrary=>e
